@@ -12,3 +12,6 @@
 |courseParticipate, attendancePerDate, attendee|courseParticipate, attendeancePerDate, attendee는 1 대 다 관계를 연쇄적으로 갖고 있다. courseParticipate는 일종의 출석부 처럼 활용되며 attendancePerDate는 한 강좌에서 발생하는 여러 수업 각각을 뜻한다. attendee는 한 수업 내에서 각각의 학생들에 대한 출석 정보가 담기게 된다||
 |user, messenger, directMessage|모든 user는 하나의 메신저함을 가지고 메신저함 내부에는 여러 개의 DM들이 담기게 된다|일반 회원과 관리자 모두 메신저 기능을 사용할 수 있다|
 |course, chattingRoom, chatMessage|강좌와 강좌별 채팅방은 1대1 관계를 가진다. 그리고 한 채팅방 내에서 여러개의 message 각각은 chatMessage이다||
+
+# 테이블 설계
+![테이블 설계](./image/table.png)
