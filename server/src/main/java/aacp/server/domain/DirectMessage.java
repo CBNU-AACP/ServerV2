@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class DirectMessage {
+public class DirectMessage extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "direct_message_id")
