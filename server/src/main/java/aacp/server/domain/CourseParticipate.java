@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class CourseParticipate {
+public class CourseParticipate extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "course_participate_id")

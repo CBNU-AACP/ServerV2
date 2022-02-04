@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Course {
+public class Course extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "course_id")

@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Attendee {
+public class Attendee extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "attendee_id")
