@@ -18,11 +18,11 @@ public abstract class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String identifier;
+    protected String identifier;
 
-    private String password;
+    protected String password;
 
-    private String name;
+    protected String name;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "messenger_id")

@@ -1,6 +1,7 @@
 package aacp.server.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,8 @@ public class User extends Member {
 
     private String identifier;
 
+    private String email;
+
     private String studentId;
 
     private String schoolCode;
@@ -24,6 +27,18 @@ public class User extends Member {
     private String phoneNumber;
 
     private String macAddress;
+
+    @Builder
+    public User(String identifier, String password, String email, String studentId, String schoolCode, String phoneNumber) {
+        this.identifier = identifier;
+        this.password = password;
+        this.email = email;
+        this.studentId = studentId;
+        this.schoolCode = schoolCode;
+        this.phoneNumber = phoneNumber;
+    }
+
+
 
     @OneToMany(mappedBy = "user")
     private List<CourseAdmin> courseAdmins = new ArrayList<>();
