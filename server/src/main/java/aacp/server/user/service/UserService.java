@@ -3,6 +3,7 @@ package aacp.server.user.service;
 import aacp.server.domain.User;
 import aacp.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public Long register(User user){
@@ -32,7 +34,7 @@ public class UserService {
     public String login(String identifier, String password){
         List<User> userList = userRepository.findByIdentifier(identifier);
         if(!userList.isEmpty()){
-            if(!userList.get(0).getPassword().equals(password)) throw new IllegalStateException("비밀번호가 일치하지 않습니다");
+            if(!bCryptPasswordEncoder.matches(password, userList.get(0).getPassword())) throw new IllegalStateException("비밀번호가 일치하지 않습니다");
             else return identifier;
         }
         else throw new IllegalStateException("존재하지 않는 회원입니다");

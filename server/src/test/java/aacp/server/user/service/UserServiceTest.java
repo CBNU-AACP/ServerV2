@@ -21,7 +21,7 @@ class UserServiceTest {
     @Test
     void register() {
         //given
-        User user = new User("test1","1234", "test1@test.com","201323","23232","01000000000");
+        User user = new User("test1","hihi", "1234", "test1@test.com","201323","23232","01000000000");
 
         //when
         Long savedId = userService.register(user);
@@ -36,7 +36,8 @@ class UserServiceTest {
     @Test()
     void register_exception() throws Exception {
         //given
-        User user = new User("test1","1234", "test1@test.com","201323","23232","01000000000");
+        User user = new User("test1","hihi", "1234", "test1@test.com","201323","23232","01000000000");
+
         userRepository.save(user);
         em.flush();
         em.clear();
@@ -51,7 +52,8 @@ class UserServiceTest {
     @Test
     void validateDuplicateUser(){
         //given
-        User user = new User("test1","1234", "test1@test.com","201323","23232","01000000000");
+        User user = new User("test1","hihi", "1234", "test1@test.com","201323","23232","01000000000");
+
         userRepository.save(user);
         em.flush();
         em.clear();
@@ -66,7 +68,8 @@ class UserServiceTest {
     @Test
     void login() {
         //given
-        User user = new User("test1","1234", "test1@test.com","201323","23232","01000000000");
+        User user = new User("test1","hihi", "1234", "test1@test.com","201323","23232","01000000000");
+
         userRepository.save(user);
         em.flush();
         em.clear();
@@ -81,7 +84,8 @@ class UserServiceTest {
     @Test
     void login_exception() {
         //given
-        User user = new User("test1","12345","test1@test.com","201323","23232","01000000000");
+        User user = new User("test1","hihi", "1234", "test1@test.com","201323","23232","01000000000");
+
         userRepository.save(user);
         em.flush();
         em.clear();
