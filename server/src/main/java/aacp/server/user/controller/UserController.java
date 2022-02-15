@@ -1,5 +1,6 @@
 package aacp.server.user.controller;
 
+import aacp.server.common.jwt.JwtProvider;
 import aacp.server.domain.User;
 import aacp.server.user.service.UserService;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +21,11 @@ public class UserController {
 
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserDetailsService userDetailsService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid UserRegisterRequestDto request){
-        User user = new User(request.identifier, bCryptPasswordEncoder.encode(request.password), request.email, request.studentId, request.schoolCode, request.phoneNumber);
+        User user = new User(request.identifier, request.name, bCryptPasswordEncoder.encode(request.password), request.email, request.studentId, request.schoolCode, request.phoneNumber);
         userService.register(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -30,9 +33,14 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserResponseDto> login(@RequestBody @Valid UserLoginRequestDto request){
         try{
-            String userIdentifier = userService.login(request.identifier, request.password);
-            return new ResponseEntity<>(new UserResponseDto(userIdentifier), HttpStatus.OK);
+            String userIdentifier = userService.login(request.identifier,request.password);
+            System.out.println("userId : " + userIdentifier);
+            String jwtToken = new JwtProvider(userDetailsService).getJwtToken(request.identifier);
+            System.out.println("token : " + jwtToken);
+
+            return new ResponseEntity<>(new UserResponseDto(userIdentifier, jwtToken), HttpStatus.OK);
         }catch (Exception e){
+            System.out.println(e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -46,6 +54,7 @@ public class UserController {
     @Data
     @AllArgsConstructor
     static class UserRegisterRequestDto{
+        public String name;
         private String identifier;
         private String password;
         private String email;
@@ -64,7 +73,7 @@ public class UserController {
     @AllArgsConstructor
     static class UserResponseDto{
         private String identifier;
+        private String jwtToken;
     }
-
 
 }

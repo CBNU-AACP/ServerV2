@@ -29,7 +29,7 @@ public class UserDetailsSerivceImpl implements UserDetailsService {
      *  아직은 권한이 구분되어 있지 않아서 사용하지 않는다
      */
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userIdentifier) throws UsernameNotFoundException {

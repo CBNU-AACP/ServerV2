@@ -33,7 +33,6 @@ public class UserService {
 
     public String login(String identifier, String password){
         List<User> userList = userRepository.findByIdentifier(identifier);
-        System.out.println(password + " " + userList.get(0).getPassword());
         if(!userList.isEmpty()){
             if(!bCryptPasswordEncoder.matches(password, userList.get(0).getPassword())) throw new IllegalStateException("비밀번호가 일치하지 않습니다");
             else return identifier;
