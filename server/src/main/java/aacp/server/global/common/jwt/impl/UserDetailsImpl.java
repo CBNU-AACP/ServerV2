@@ -1,4 +1,4 @@
-package aacp.server.common.jwt.impl;
+package aacp.server.global.common.jwt.impl;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

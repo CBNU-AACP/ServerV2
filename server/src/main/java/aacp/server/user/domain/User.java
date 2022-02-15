@@ -1,5 +1,8 @@
-package aacp.server.domain;
+package aacp.server.user.domain;
 
+import aacp.server.domain.CourseAdmin;
+import aacp.server.domain.CourseParticipate;
+import aacp.server.domain.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

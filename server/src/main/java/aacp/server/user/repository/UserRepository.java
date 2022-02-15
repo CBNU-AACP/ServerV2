@@ -1,6 +1,6 @@
 package aacp.server.user.repository;
 
-import aacp.server.domain.User;
+import aacp.server.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

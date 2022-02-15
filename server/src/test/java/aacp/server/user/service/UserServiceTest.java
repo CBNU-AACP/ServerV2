@@ -1,6 +1,6 @@
 package aacp.server.user.service;
 
-import aacp.server.domain.User;
+import aacp.server.user.domain.User;
 import aacp.server.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

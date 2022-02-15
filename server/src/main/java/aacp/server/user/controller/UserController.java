@@ -1,7 +1,7 @@
 package aacp.server.user.controller;
 
-import aacp.server.common.jwt.JwtProvider;
-import aacp.server.domain.User;
+import aacp.server.global.common.jwt.JwtProvider;
+import aacp.server.user.domain.User;
 import aacp.server.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
-package aacp.server.common.config;
+package aacp.server.global.config;
 
-import aacp.server.common.jwt.JwtAuthorizationFilter;
-import aacp.server.common.jwt.JwtProvider;
+import aacp.server.global.common.jwt.JwtAuthorizationFilter;
+import aacp.server.global.common.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

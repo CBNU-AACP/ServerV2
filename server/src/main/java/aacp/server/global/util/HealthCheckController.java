@@ -1,4 +1,4 @@
-package aacp.server.common;
+package aacp.server.global.util;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
