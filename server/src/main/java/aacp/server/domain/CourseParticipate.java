@@ -1,5 +1,6 @@
 package aacp.server.domain;
 
+import aacp.server.user.domain.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

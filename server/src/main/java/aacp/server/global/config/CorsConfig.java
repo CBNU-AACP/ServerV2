@@ -1,4 +1,4 @@
-package aacp.server.common.config;
+package aacp.server.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,5 +1,6 @@
-package aacp.server.common.jwt;
+package aacp.server.global.jwt;
 
+import aacp.server.global.common.jwt.JwtProvider;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class JwtProviderTest {
 
-    @Autowired JwtProvider jwtProvider;
+    @Autowired
+    JwtProvider jwtProvider;
 
     @Test
     public void jwt_발급_검증(){

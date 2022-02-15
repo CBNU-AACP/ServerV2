@@ -1,6 +1,6 @@
-package aacp.server.common.jwt.impl;
+package aacp.server.global.common.jwt.impl;
 
-import aacp.server.domain.User;
+import aacp.server.user.domain.User;
 import aacp.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
