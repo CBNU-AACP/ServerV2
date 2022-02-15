@@ -9,8 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -19,7 +19,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter;
-    private final UserDetailsService userDetailsService;
+    private final JwtProvider jwtProvider;
 
     @Bean
     public BCryptPasswordEncoder getPasswordEncoder(){
@@ -35,13 +35,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // security session을 사용하지 않는다
                 .and()
                 .addFilter(corsFilter)      //Security 필터에 cors 정책을 걸어준다
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), new JwtProvider(userDetailsService)))
                 .formLogin().disable()
                 .httpBasic().disable();     // httpBasic : http header에 Id, pw를 넣어서 보내주는 방식, 보안이 약하다
                                             // 우린 authorization에 토큰을 넣을 것(httpBearer 방식)이므로 httpBasic을 false로 줄 것
 
         http.authorizeRequests()
-                .antMatchers("/api/users/**").permitAll()       //api/users/**는 로그인, 중복 id 검사 등등 이므로 모든 권한을 가진 자들에게 공개
-                .anyRequest().authenticated();                              // 그 밖에 모든 요청은 jwt를 통해서
+                .antMatchers("/api/users/*").permitAll()       //api/users/**는 로그인, 중복 id 검사 등등 이므로 모든 권한을 가진 자들에게 공개
+                .anyRequest().authenticated()                              // 그 밖에 모든 요청은 jwt를 통해서
+        .and()
+                .addFilterBefore(new JwtAuthorizationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+
     }
 }
