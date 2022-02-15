@@ -37,6 +37,7 @@ class UserServiceTest {
     void register_exception() throws Exception {
         //given
         User user = new User("test1","hihi", "1234", "test1@test.com","201323","23232","01000000000");
+
         userRepository.save(user);
         em.flush();
         em.clear();
@@ -52,6 +53,7 @@ class UserServiceTest {
     void validateDuplicateUser(){
         //given
         User user = new User("test1","hihi", "1234", "test1@test.com","201323","23232","01000000000");
+
         userRepository.save(user);
         em.flush();
         em.clear();
@@ -67,6 +69,7 @@ class UserServiceTest {
     void login() {
         //given
         User user = new User("test1","hihi", "1234", "test1@test.com","201323","23232","01000000000");
+
         userRepository.save(user);
         em.flush();
         em.clear();
@@ -82,6 +85,7 @@ class UserServiceTest {
     void login_exception() {
         //given
         User user = new User("test1","hihi", "1234", "test1@test.com","201323","23232","01000000000");
+
         userRepository.save(user);
         em.flush();
         em.clear();

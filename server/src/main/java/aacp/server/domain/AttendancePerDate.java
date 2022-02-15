@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class AttendancePerDate {
+public class AttendancePerDate extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "attendance_per_date_id")

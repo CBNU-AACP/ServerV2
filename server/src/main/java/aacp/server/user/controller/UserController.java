@@ -75,5 +75,4 @@ public class UserController {
         private String identifier;
         private String jwtToken;
     }
-
 }
