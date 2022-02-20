@@ -17,6 +17,7 @@ import javax.validation.Valid;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @RestController
+
 public class UserController {
 
     private final UserService userService;
@@ -27,21 +28,22 @@ public class UserController {
     public ResponseEntity<?> register(@RequestBody @Valid UserRegisterRequestDto request){
         User user = new User(request.identifier, request.name, bCryptPasswordEncoder.encode(request.password), request.email, request.studentId, request.schoolCode, request.phoneNumber);
         userService.register(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return ResponseEntity.ok()
+                .body("register done");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserResponseDto> login(@RequestBody @Valid UserLoginRequestDto request){
+    public ResponseEntity<?> login(@RequestBody @Valid UserLoginRequestDto request){
         try{
             String userIdentifier = userService.login(request.identifier,request.password);
-            System.out.println("userId : " + userIdentifier);
             String jwtToken = new JwtProvider(userDetailsService).getJwtToken(request.identifier);
-            System.out.println("token : " + jwtToken);
-
-            return new ResponseEntity<>(new UserResponseDto(userIdentifier, jwtToken), HttpStatus.OK);
+            System.out.println(userIdentifier + " " + jwtToken);
+            return ResponseEntity.ok()
+                    .body(new UserResponseDto(userIdentifier, jwtToken));
         }catch (Exception e){
-            System.out.println(e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest()
+                    .body(e.getMessage());
         }
     }
 
@@ -70,9 +72,10 @@ public class UserController {
         private String password;
     }
 
+    @Data
     @AllArgsConstructor
     static class UserResponseDto{
-        private String identifier;
-        private String jwtToken;
+        private final String identifier;
+        private final String jwtToken;
     }
 }
