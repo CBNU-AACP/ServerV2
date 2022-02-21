@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 
@@ -37,13 +38,17 @@ public class User extends Member {
     public User(String identifier,String name, String password, String email, String studentId, String schoolCode, String phoneNumber) {
         this.identifier = identifier;
         this.name = name;
-        this.password = password;
+        this.password = encryptPassword(password);
         this.email = email;
         this.studentId = studentId;
         this.schoolCode = schoolCode;
         this.phoneNumber = phoneNumber;
     }
 
+    public void changeMacAddress(String macAddress){ this.macAddress = macAddress; }
+    private String encryptPassword(String rawPassword) {
+        return new BCryptPasswordEncoder().encode(rawPassword);
+    }
     @OneToMany(mappedBy = "user")
     private List<CourseAdmin> courseAdmins = new ArrayList<>();
 
