@@ -18,7 +18,14 @@ public enum ErrorCode {
     EMAIL_DUPLICATION(400, "U001", "중복된 이메일입니다" ),
     ID_DUPLICATION(400, "U002", "중복된 아이디입니다"),
     USER_NOT_EXISTED(400, "U003", "존재하지 않는 유저입니다"),
-    WRONG_PASSWORD(400, "U004", "비밀번호가 잘못되었습니다");
+    WRONG_PASSWORD(400, "U004", "비밀번호가 잘못되었습니다"),
+
+    // jwtToken
+    TOKEN_EXPIRED(403, "JWT01", "토큰 유효기간이 만료되었습니다"),
+    INVALID_SIGNATURE_TOKEN(403, "JWT02", "토큰 서명 정보가 올바르지 않습니다"),
+    MISMATCH_ALGORITHM(403, "JWT03", "토큰 암호화 알고리즘이 맞지 않습니다"),
+    INVALID_TOKEN(403, "JWT04", "토큰 정보가 올바르지 않습니다"),
+    EMPTY_REFRESH_TOKEN(400, "JWT05", "Refresh-Token이 없습니다");
 
     private final String code;
     private final String message;
