@@ -55,4 +55,7 @@ public class User extends Member {
     @OneToMany(mappedBy = "user")
     private List<CourseParticipate> courseParticipates = new ArrayList<>();
 
+    @OneToOne(mappedBy = "user")
+    private RefreshToken refreshToken;
+
 }
