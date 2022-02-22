@@ -1,7 +1,9 @@
 package aacp.server.global.config;
 
+import aacp.server.global.common.jwt.AccessTokenProvider;
 import aacp.server.global.common.jwt.JwtAuthorizationFilter;
 import aacp.server.global.common.jwt.JwtProvider;
+import aacp.server.global.config.entryPoint.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +21,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter;
-    private final JwtProvider jwtProvider;
+    private final AccessTokenProvider accessTokenProvider;
 
     @Bean
     public BCryptPasswordEncoder getPasswordEncoder(){
@@ -43,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/*").permitAll()       //api/users/**는 로그인, 중복 id 검사 등등 이므로 모든 권한을 가진 자들에게 공개
                 .anyRequest().authenticated()                              // 그 밖에 모든 요청은 jwt를 통해서
         .and()
-                .addFilterBefore(new JwtAuthorizationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
-
+                .addFilterBefore(new JwtAuthorizationFilter(accessTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
     }
 }
