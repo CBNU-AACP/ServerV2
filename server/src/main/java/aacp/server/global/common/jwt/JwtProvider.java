@@ -8,24 +8,27 @@ import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-public abstract class JwtProvider {
+@Component
+@RequiredArgsConstructor
+public class JwtProvider {
 
-    private final String jwtSecretKey;
-    private final Long jwtExpirationTime;
+    private String jwtSecretKey;
+    private Long jwtExpirationTime;
     private final UserDetailsService userDetailsService;
 
-    public JwtProvider(String jwtSecretKey, Long jwtExpirationTime, UserDetailsService userDetailsService) {
+    public void setJwtSecretKeyAndExpirationTime(String jwtSecretKey, Long jwtExpirationTime){
         this.jwtSecretKey = jwtSecretKey;
         this.jwtExpirationTime = jwtExpirationTime;
-        this.userDetailsService = userDetailsService;
     }
 
     public String createToken(String identifier){
