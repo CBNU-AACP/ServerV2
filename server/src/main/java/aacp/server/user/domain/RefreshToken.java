@@ -1,7 +1,6 @@
 package aacp.server.user.domain;
 
 import lombok.AccessLevel;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +11,7 @@ import javax.persistence.*;
 @Entity
 public class RefreshToken{
 
-    @Id @Generated
+    @Id @GeneratedValue
     @Column(name = "refresh_token_id")
     private Long id;
     private String refreshToken;
