@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 public class RefreshTokenProvider extends JwtProvider{
 
     public RefreshTokenProvider(UserDetailsService userDetailsService) {
-        super("refresh_secret_key", 1209600000L, userDetailsService);
+        super(userDetailsService);
+        setJwtSecretKeyAndExpirationTime("refresh_secret_key",1209600000L);
     }
 
     @Override
