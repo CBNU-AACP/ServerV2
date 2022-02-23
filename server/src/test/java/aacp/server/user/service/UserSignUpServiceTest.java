@@ -1,9 +1,13 @@
 package aacp.server.user.service;
 
+import aacp.server.global.common.jwt.AccessTokenProvider;
+import aacp.server.global.common.jwt.RefreshTokenProvider;
+import aacp.server.user.domain.RefreshToken;
 import aacp.server.user.domain.User;
 import aacp.server.user.dto.UserSignUpDto;
 import aacp.server.user.exception.InvalidUserIdentifier;
 import aacp.server.user.exception.InvalidUserPassword;
+import aacp.server.user.repository.RefreshTokenRepository;
 import aacp.server.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,7 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
 
 @SpringBootTest
 @Transactional
@@ -25,21 +30,31 @@ class UserSignUpServiceTest {
     UserSignUpService userSignUpService;
     @Autowired
     EntityManager em;
+    @Autowired
+    AccessTokenProvider accessTokenProvider;
+    @Autowired
+    RefreshTokenRepository refreshTokenRepository;
 
     @Test
     void 로그인() {
         //given
         User user = new User("test1","hihi", "1234", "test1@test.com","201323","23232","01000000000");
-
         userRepository.save(user);
+
         em.flush();
         em.clear();
 
         //when
         UserSignUpDto dto = userSignUpService.of(user.getIdentifier(), "1234");
+        List<RefreshToken> findRefreshToken = refreshTokenRepository.findByUserIdentifier(user.getIdentifier());
+        String accessToken = dto.getAccessRefreshTokenDto().getAccessToken();
+        String refreshToken = dto.getAccessRefreshTokenDto().getRefreshToken();
 
         //then
         Assertions.assertThat(dto.getIdentifier()).isEqualTo(user.getIdentifier());
+        accessTokenProvider.validateToken(accessToken);
+        Assertions.assertThat(findRefreshToken.get(0).getRefreshToken()).isEqualTo(refreshToken);
+
     }
 
     @Test

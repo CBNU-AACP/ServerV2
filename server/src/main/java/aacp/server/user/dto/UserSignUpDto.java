@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserSignUpDto {
     private String identifier;
-    private String jwtToken;
+    private AccessRefreshTokenDto accessRefreshTokenDto;
 }
