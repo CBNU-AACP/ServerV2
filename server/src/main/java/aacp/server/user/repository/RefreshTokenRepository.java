@@ -1,6 +1,7 @@
 package aacp.server.user.repository;
 
 import aacp.server.user.domain.RefreshToken;
+import aacp.server.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,12 @@ public class RefreshTokenRepository {
 
     public RefreshToken findById(Long id){
         return em.find(RefreshToken.class, id);
+    }
+
+    public List<User> findUserByToken(String refreshToken){
+        return em.createQuery("select u from RefreshToken r join r.user u where r.refreshToken =: refreshToken", User.class)
+                .setParameter("refreshToken", refreshToken)
+                .getResultList();
     }
 
     public List<RefreshToken> findByUserIdentifier(String userIdentifier){
