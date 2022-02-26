@@ -3,13 +3,16 @@ package aacp.server.user.repository;
 import aacp.server.global.common.jwt.RefreshTokenProvider;
 import aacp.server.user.domain.RefreshToken;
 import aacp.server.user.domain.User;
+import aacp.server.user.exception.EmailDuplicationException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 
@@ -68,5 +71,18 @@ class RefreshTokenRepositoryTest {
 
         Assertions.assertThat(findRefreshToken.get(0).getRefreshToken()).isEqualTo(refreshToken.getRefreshToken());
         Assertions.assertThat(findRefreshToken.get(0).getUser().getIdentifier()).isEqualTo(user.getIdentifier());
+    }
+
+    @Test
+    void findByToken_잘못된_토큰() {
+        //given
+        String identifier = "test1234";
+        String fakeToken = refreshTokenProvider.createToken(identifier);
+
+        //when
+
+        //then
+        Assertions.assertThatThrownBy(() -> refreshTokenRepository.findUserByToken(fakeToken))
+                .isInstanceOf(EmptyResultDataAccessException.class);
     }
 }
