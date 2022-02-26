@@ -5,7 +5,7 @@ import aacp.server.global.common.jwt.RefreshTokenProvider;
 import aacp.server.user.domain.RefreshToken;
 import aacp.server.user.domain.User;
 import aacp.server.user.dto.AccessRefreshTokenDto;
-import aacp.server.user.dto.UserSignUpDto;
+import aacp.server.user.dto.UserSignUpServiceDto;
 import aacp.server.user.exception.InvalidUserIdentifier;
 import aacp.server.user.exception.InvalidUserPassword;
 import aacp.server.user.repository.RefreshTokenRepository;
@@ -28,16 +28,16 @@ public class UserSignUpService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserDetailsService userDetailsService;
 
-    public UserSignUpDto of(String identifier, String password){
+    public UserSignUpServiceDto of(String identifier, String password){
         String userPassword = verifyIdentifier(identifier);
         verifyPassword(password, userPassword);
         AccessRefreshTokenDto jwtTokens = issueJwtTokens(identifier);
         saveRefreshToken(jwtTokens.getRefreshToken(), identifier);
-        return new UserSignUpDto(identifier,jwtTokens);
+        return new UserSignUpServiceDto(identifier,jwtTokens);
     }
 
     private String verifyIdentifier(String identifier){
-        List<User> findUser = userRepository.findByIdentifier(identifier);
+        List<User> findUser = userRepository.findByIdentifier(identifier);      //조회가 되지 않습니다
         if(findUser.isEmpty()) throw new InvalidUserIdentifier(identifier);
         else return findUser.get(0).getPassword();
     }

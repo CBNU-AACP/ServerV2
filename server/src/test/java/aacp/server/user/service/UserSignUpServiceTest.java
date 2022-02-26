@@ -1,10 +1,9 @@
 package aacp.server.user.service;
 
 import aacp.server.global.common.jwt.AccessTokenProvider;
-import aacp.server.global.common.jwt.RefreshTokenProvider;
 import aacp.server.user.domain.RefreshToken;
 import aacp.server.user.domain.User;
-import aacp.server.user.dto.UserSignUpDto;
+import aacp.server.user.dto.UserSignUpServiceDto;
 import aacp.server.user.exception.InvalidUserIdentifier;
 import aacp.server.user.exception.InvalidUserPassword;
 import aacp.server.user.repository.RefreshTokenRepository;
@@ -45,7 +44,7 @@ class UserSignUpServiceTest {
         em.clear();
 
         //when
-        UserSignUpDto dto = userSignUpService.of(user.getIdentifier(), "1234");
+        UserSignUpServiceDto dto = userSignUpService.of(user.getIdentifier(), "1234");
         List<RefreshToken> findRefreshToken = refreshTokenRepository.findByUserIdentifier(user.getIdentifier());
         String accessToken = dto.getAccessRefreshTokenDto().getAccessToken();
         String refreshToken = dto.getAccessRefreshTokenDto().getRefreshToken();
